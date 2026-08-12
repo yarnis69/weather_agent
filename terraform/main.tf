@@ -32,6 +32,10 @@ resource "google_project_service" "secret_manager" {
     disable_on_destroy = false
 }
 
+resource "google_project_service" "iam_credentials" {
+  service            = "iamcredentials.googleapis.com"
+  disable_on_destroy = false
+}
 
 # create Google Artifact Registry repository for container images
 
