@@ -1,0 +1,36 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build and push image
+        run: |
+          gcloud auth configure-docker europe-west2-docker.pkg.dev
+          docker build -t europe-west2-docker.pkg.dev/weather-agent-504614/weather-agent-repo/weather-agent:${{ github.sha }} .
+          docker push europe-west2-docker.pkg.dev/weather-agent-504614/weather-agent-repo/weather-agent:${{ github.sha }}
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy weather-agent \
+            --image europe-west2-docker.pkg.dev/weather-agent-504614/weather-agent-repo/weather-agent:${{ github.sha }} \
+            --region europe-west2 \
+            --min-instances 0
