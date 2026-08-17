@@ -1,6 +1,8 @@
 .venv-agentengine
 __pycache__
 .env
+.adk
 terraform.tfvars
 .terraform/
 *.tfstate*
+.terraform.lock.hcl
