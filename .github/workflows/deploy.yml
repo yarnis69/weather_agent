@@ -5,7 +5,7 @@ on:
     branches: [main]
 
     paths:
-      - 'weather-agent/**'
+      - 'cloud-run-weather-agent/**'
       - '.github/workflows/deploy.yml'
 
 permissions:
