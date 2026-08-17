@@ -19,7 +19,7 @@ def get_weather(location: str) -> dict:
     location_lon = parsed_geolocation_data["results"][0]["longitude"]
     location_name = parsed_geolocation_data["results"][0]["name"]
 
-    # weather lookup using returned geolocation
+    # weather lookup using returned geo-location
 
     weather_api_response = requests.get(
         "https://api.open-meteo.com/v1/forecast",
