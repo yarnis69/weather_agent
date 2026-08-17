@@ -121,15 +121,15 @@ resource "google_cloud_run_v2_service_iam_member" "public_access" {
 
 # Setup WIF for Github, first creating a Workload Identity Pool, github provider and attribute mapping to allow federated access from a specific Github repository
 
-resource "google_iam_workload_identity_pool" "github_actions_pool2" {
+resource "google_iam_workload_identity_pool" "github_actions_pool3" {
   provider                  = google
-  workload_identity_pool_id = "github-actions-pool2"
+  workload_identity_pool_id = "github-actions-pool3"
   display_name              = "GitHub Workload Identity Pool"
   description               = "Workload Identity Pool for GitHub"
 }
 
 resource "google_iam_workload_identity_pool_provider" "github_provider" {
-  workload_identity_pool_id = google_iam_workload_identity_pool.github_actions_pool2.workload_identity_pool_id
+  workload_identity_pool_id = google_iam_workload_identity_pool.github_actions_pool3.workload_identity_pool_id
   workload_identity_pool_provider_id = "github-provider"
   display_name = "GitHub WIF Provider"
   description = "Workload Identity Provider for GitHub"
@@ -156,7 +156,7 @@ resource "google_service_account" "github_deployer" {
 resource "google_service_account_iam_member" "wif_impersonation" {
   service_account_id = google_service_account.github_deployer.name
   role               = "roles/iam.workloadIdentityUser"
-  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_actions_pool2.name}/attribute.repository/yarnis69/weather_agent"
+  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_actions_pool3.name}/attribute.repository/yarnis69/weather_agent"
 }
 
 # Grant the Google service account that will be impersonated by the Github identity pool access to the Google Artifact Registry repository, Cloud Run service and Cloud Run service account

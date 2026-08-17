@@ -1,5 +1,6 @@
 from google.adk.agents import Agent
 import requests
+from vertexai.agent_engines import AdkApp
 
 def get_weather(location: str) -> dict:
     """Returns the current weather for a given location."""
@@ -14,8 +15,6 @@ def get_weather(location: str) -> dict:
 
     if "results" not in parsed_geolocation_data or not parsed_geolocation_data["results"]:
         return {"error": f"could not find the location named {location}"}
-
-    location_lat = parsed_geolocation_data
 
     location_lat = parsed_geolocation_data["results"][0]["latitude"]
     location_lon = parsed_geolocation_data["results"][0]["longitude"]
@@ -47,7 +46,7 @@ def get_weather(location: str) -> dict:
 
 root_agent = Agent(
     name="weather_agent",
-    model="gemini-3.6-flash",
+    model="gemini-3.5-flash",
     description="Looks up the weather forcast for an area and offers advice.",
     instruction=(
         "You are a weather checking agent. When asked about the weather"
@@ -57,3 +56,6 @@ root_agent = Agent(
     ),
     tools=[get_weather],
 )
+
+
+app = AdkApp(agent=root_agent)

@@ -1,0 +1,6 @@
+.venv-agentengine
+__pycache__
+.env
+terraform.tfvars
+.terraform/
+*.tfstate*

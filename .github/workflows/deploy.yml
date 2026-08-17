@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
 
+    paths:
+      - 'weather-agent/**'
+      - '.github/workflows/deploy.yml'
+
 permissions:
   contents: read
   id-token: write
@@ -25,7 +29,7 @@ jobs:
       - name: Build and push image
         run: |
           gcloud auth configure-docker europe-west2-docker.pkg.dev
-          docker build -t europe-west2-docker.pkg.dev/weather-agent-504614/weather-agent-repo/weather-agent:${{ github.sha }} .
+          docker build -t europe-west2-docker.pkg.dev/weather-agent-504614/weather-agent-repo/weather-agent:${{ github.sha }} ./cloud-run-weather-agent
           docker push europe-west2-docker.pkg.dev/weather-agent-504614/weather-agent-repo/weather-agent:${{ github.sha }}
 
       - name: Deploy to Cloud Run
