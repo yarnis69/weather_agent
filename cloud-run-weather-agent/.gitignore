@@ -1,7 +1,7 @@
 .venv
 __pycache__
 .env
-.adk
+.adk/
 terraform.tfvars
 .terraform/
 *.tfstate*
