@@ -84,7 +84,7 @@ Images are tagged with the commit SHA rather than `:latest`. Every deployed revi
 
 ### Pinned dependency versions
 
-`requirements.txt` pins exact versions. This isn't theoretical — a major release of the `mcp` package broke ADK's MCP imports silently, with the module exporting nothing rather than raising an error. Diagnosing that cost more time than pinning ever would.
+`requirements.txt` pins exact versions.
 
 ---
 
