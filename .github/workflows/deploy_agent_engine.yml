@@ -1,0 +1,40 @@
+name: Deploy to Agent Engine
+
+on:
+  push:
+    branches: [main]
+
+    paths:
+      - 'agent-engine-weather-agent/**'
+      - '.github/workflows/deploy_agent_engine.yml'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Delete exisiting Agent Engine Deployment
+        run: |
+          python agent-engine-weather-agent/delete.py
+
+      - name: Deploy new Agent Engine Deployment
+        run: |
+          python agent-engine-weather-agent/deploy.py
+
+     
