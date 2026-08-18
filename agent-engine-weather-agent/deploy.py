@@ -1,4 +1,5 @@
 import vertexai
+from vertexai import agent_engines 
 
 client = vertexai.Client(  
     project="weather-agent-504614",
@@ -11,7 +12,7 @@ remote_app = client.agent_engines.create(
         "source_packages": ["weather_agent"],            
         "entrypoint_module": "weather_agent.agent",      
         "entrypoint_object": "app",     
-        "display_name": "Weather_Agent",    
+        "display_name": "Weather Agent",    
         "identity_type": "AGENT_IDENTITY",
         "requirements_file": "weather_agent/requirements.txt",
         "agent_framework": "google-adk",

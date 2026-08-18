@@ -6,7 +6,7 @@ on:
 
     paths:
       - 'cloud-run-weather-agent/**'
-      - '.github/workflows/deploy_cloud_run.yml'
+      - '.github/workflows/deploy.yml'
 
 permissions:
   contents: read
@@ -24,6 +24,7 @@ jobs:
           workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
           service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 
+      - uses: google-github-actions/setup-gcloud@v2
 
       - name: Build and push image
         run: |
