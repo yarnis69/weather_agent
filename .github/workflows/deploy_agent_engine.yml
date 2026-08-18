@@ -29,9 +29,6 @@ jobs:
           python-version: '3.13'
           cache: 'pip'
 
-      - name: Install dependencies
-        run: pip install -r agent-engine-weather-agent/weather_agent/requirements.txt
-
       - name: Delete exisiting Agent Engine Deployment
         run: |
           python agent-engine-weather-agent/delete.py
